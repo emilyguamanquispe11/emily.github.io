@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Prata&display=swap" rel="stylesheet">
+  <style>
+    header {
+      text-align: center;
+      background: url('https://i.imgur.com/H95KvUO.jpeg');
+      background-size: cover;
+      color: orange;
+      font-family: 'Abril Fatface', serif;
+    }
+	
+	button {
+		float: left;
+		margin-right: 10px;
+	}
+    a {
+      color: pink;
+    }
+    h1 {
+      font-size: 75px;
+    }
+    img {
+      margin: 40px 0px 0px 0px;
+      border: 7px solid white;
+      border-radius: 100px;
+    }
+    ul {
+      padding: 10px;
+      background: rgba(100,0,0,5);
+    }
+    li {
+      display: inline;
+      padding: 0px 10px 0px 10px;
+    }
+    article {
+      max-width: 500px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    body {
+      background: url("https://i.imgur.com/rnrlo.jpeg");
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-family: 'Prata', serif;
+    }
+      
+      }
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 36px;
+        padding: 5px;
+      }
+      li {
+        padding: 5px;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjHsLLn9kI96lYuAtvgOvqUxJUIKq28iXDgQ&usqp=CAU">
+    <h1>Gaby's Blog</h1>
+    <ul>
+      <li><a href="https://www.lonelyplanet.com/articles/best-places-to-visit-in-ecuador">Ecuador Places </a></li>
+      <li><a href="https://wanderbusecuador.com/ecuador-traditions/">Traditions</a></li>
+      <li><a href="https://www.scottdunn.com/us/blog/traditional-ecuadorian-food">Food</a></li>
+    </ul>
+  </header>
+  <article>
+    <h2> Lagoon Quilotoa</h2>
+    <p> It was formed when a volcano collapsed and the resulting crater was filled with a striking emerald green lake, the resulting color of volcanic minerals. And it is located in Quito, also to get to the place you must take a walk.</p>
+    <button class="likeButtons">Like</button>
+	<div class="numLikes">0</div> 
+  </article>
+  <article>
+    <h2>Mindo Cloud Forest</h2>
+    <p>Mindo is a small city located 2 hours north of Quito, for activities such as zip lines, canyoning and tubing. Also visit the organic chocolate fabric and its beautiful butterfly and orchid farms.</p>
+    <button class="likeButtons">Like</button>
+	<div class="numLikes">0</div> 
+  </article>
+  <article>
+    <h2>Altar Lagoons Walk</h2>
+    <p>It is one of the most spectacular mountains in Ecuador. The Incas called it Capac Urcu montana sublime. There is a special walk to the Altar and where you can see some of the most beautiful lagoons of the Sangay National Park.</p>
+    <button class="likeButtons">Like</button>
+	<div class="numLikes">0</div> 
+  </article>
+  
+  <script>
+    $("button").on("click", function() {
+      alert("VISIT THE ECUADOR");
+    });ß
+  </script>	
+	<script type="module">
+	  // Import the functions you need from the SDKs you need
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+	  
+	  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+	  // TODO: Add SDKs for Firebase products that you want to use
+	  // https://firebase.google.com/docs/web/setup#available-libraries
+
+	  // Your web app's Firebase configuration
+	  const firebaseConfig = {
+	    apiKey: "AIzaSyChLezxqRJIXHfXSKn5GiulkOVNEN_21Hw",
+	    authDomain: "emy2-eaf12.firebaseapp.com",
+	    projectId: "emy2-eaf12",
+	    storageBucket: "emy2-eaf12.appspot.com",
+	    messagingSenderId: "863206456604",
+	    appId: "1:863206456604:web:fb41a3a943c82eb2a60ed9"
+	  };
+
+	  // Initialize Firebase
+	  const app = initializeApp(firebaseConfig);
+
+	  const db = getDatabase(app);
+	  const LikeButtons = document.querySelectorAll('.likeButtons')
+	  const numLikes = document.querySelectorAll('.numLikes')
+	  
+	  for (let i=0; i<LikeButtons.length; i++) {
+		  LikeButtons[i].addEventListener('click', function(){ Like(i) })
+		  onValue(ref(db, "/article "+i+"/numLikes"), (snapshot) => {
+			    let data = snapshot.val();
+			    numLikes[i].innerHTML = data
+		  });
+  	  }
+
+
+	  function Like(i) {
+		  const numberLikes = parseInt(numLikes[i].innerHTML) + 1
+		  set(ref(db, "article " + i), {
+			  numLikes: numberLikes,
+		  });
+	  }
+	  
+	  
+	</script>
+</body>
